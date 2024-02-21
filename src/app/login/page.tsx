@@ -1,5 +1,6 @@
 import { Loader2 } from "lucide-react";
-import React from "react";
+import { login, signup } from './actions'
+import React, { Suspense } from "react";
 
 export default function Page() {
   return (
@@ -16,6 +17,7 @@ export default function Page() {
             type="email"
             name="email"
             id="email"
+            required
             className="text-black px-3 w-full h-12 rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600"
           />
         </div>
@@ -27,15 +29,18 @@ export default function Page() {
             type="password"
             name="password"
             id="password"
+            required
             className="text-black px-3 w-full h-12 rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600"
           />
         </div>
-        <button className="border-none h-12 mb-3 rounded-md justify-center flex items-center text-white bg-indigo-600 hover:bg-indigo-500 transition duration-200 shadow-lg shadow-indigo-600/35 w-full">
+        <button formAction={login} className="border-none h-12 mb-3 rounded-md justify-center flex items-center text-white bg-indigo-600 hover:bg-indigo-500 transition duration-200 shadow-lg shadow-indigo-600/35 w-full">
           Sign in
+          <Suspense fallback="ingresando..."/>
           {/* <Loader2 className="w-5 h-5 ml-3 animate-spin" /> */}
         </button>
-        <button className="border-none h-12 rounded-md justify-center flex items-center text-white bg-purple-600 hover:bg-purple-500 transition duration-200 shadow-lg shadow-purple-600/35 w-full">
+        <button formAction={signup} className="border-none h-12 rounded-md justify-center flex items-center text-white bg-purple-600 hover:bg-purple-500 transition duration-200 shadow-lg shadow-purple-600/35 w-full">
           Sign up
+          <Suspense fallback="registrando..."/>
           {/* <Loader2 className="w-5 h-5 ml-3 animate-spin" /> */}
         </button>
       </form>
