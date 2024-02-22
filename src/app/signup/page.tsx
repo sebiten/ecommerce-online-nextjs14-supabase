@@ -1,14 +1,15 @@
 "use client";
-import { Loader2 } from "lucide-react";
-import { login, signup } from "./actions";
-import React, { Suspense } from "react";
+import React from "react";
+import { signup } from "../login/actions";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-export default function Page() {
+
+interface IpageProps {}
+
+export default function page() {
   return (
     <div className="w-full h-screen flex-col flex justify-center items-center">
       <h1 className="text-4xl text-black tracking-tighter font-bold">
-        Login to your account
+        Create an Account! 😁
       </h1>
       <form className="w-3/12">
         <div className="my-4">
@@ -18,6 +19,7 @@ export default function Page() {
           <input
             type="email"
             name="email"
+            placeholder="Enter your best email :)"
             id="email"
             required
             className="text-black px-3 w-full h-12 rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600"
@@ -31,21 +33,21 @@ export default function Page() {
             type="password"
             name="password"
             id="password"
+            placeholder="Password"
             required
             className="text-black px-3 w-full h-12 rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600"
           />
         </div>
         <button
           formAction={async (formData) => {
-            await login(formData);
-            toast.success("Logged in successfully.🎊")
-
+            await signup(formData);
+            toast.success(
+              "Account created successfully. Please check your email to verify your account."
+            );
           }}
-          className="w-full"
+          className="border-none h-12 rounded-md justify-center flex items-center text-white bg-purple-600 hover:bg-purple-500 transition duration-200 shadow-lg shadow-purple-600/35 w-full"
         >
-          <span className="border-none h-12 rounded-md justify-center flex items-center text-white bg-sky-600 hover:bg-blue-500 transition duration-200 shadow-lg shadow-purple-600/35 w-full">
-            Login
-          </span>
+          Sign up
         </button>
       </form>
     </div>
