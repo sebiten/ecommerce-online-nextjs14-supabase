@@ -8,7 +8,7 @@ interface IpageProps {}
 export default function page() {
   return (
     <div className="w-full h-screen flex-col flex justify-center items-center">
-      <h1 className="text-4xl text-black tracking-tighter font-bold">
+      <h1 className="text-4xl  tracking-tighter font-bold">
         Create an Account! 😁
       </h1>
       <form className="w-3/12">
@@ -22,7 +22,7 @@ export default function page() {
             placeholder="Enter your best email :)"
             id="email"
             required
-            className="text-black px-3 w-full h-12 rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600"
+            className=" px-3 w-full h-12 rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600"
           />
         </div>
         <div className="my-4">
@@ -35,7 +35,7 @@ export default function page() {
             id="password"
             placeholder="Password"
             required
-            className="text-black px-3 w-full h-12 rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600"
+            className=" px-3 w-full h-12 rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600"
           />
         </div>
         <button
