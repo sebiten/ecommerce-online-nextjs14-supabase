@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { createClient } from "./utils/supabase/server";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import NavBar from "./components/NavBar";
 import { ToastContainer } from "react-toastify";
@@ -22,8 +21,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
 
   const {
     data: { user },
