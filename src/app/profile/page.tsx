@@ -5,8 +5,7 @@ import Link from "next/link";
 import { createClient } from "../utils/supabase/server";
 
 export default async function About() {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
 
   const { data, error } = await supabase.auth.getUser();
   if (error || !data?.user) {
@@ -46,7 +45,9 @@ export default async function About() {
           <h1 className="text-2xl dark:text-black font-semibold mt-4">
             Hello, {data.user.email}
           </h1>
-          <p className="text-sm mt-2 dark:text-black">Welcome to our website!</p>
+          <p className="text-sm mt-2 dark:text-black">
+            Welcome to our website!
+          </p>
         </div>
         <div className="mt-6 text-center">
           <Link className="text-blue-500 hover:underline" href="/">
