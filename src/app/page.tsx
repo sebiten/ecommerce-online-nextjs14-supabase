@@ -16,11 +16,11 @@ export default function HeroText() {
           width={500}
           height={500}
         />
-        <h1 className="text-5xl font-bold text-center uppercase leading-tight tracking-tight md:text-6xl -mt-14">
+        <h1 className="text-5xl font-bold text-center uppercase leading-tight tracking-tight md:text-5xl -mt-14">
           <span >Tu estilo a un precio excelente</span>
         </h1>
 
-        <p className="text-xl  text-center mx-auto mt-4">
+        <p className="text-xl max-w-prose text-center mx-auto mt-4">
           Descubre una amplia variedad de ropa para hombres, tanto nueva como
           usada, con la mejor relación calidad-precio. <br />
           ¡Encuentra tu look ideal y exprésate sin límites!
