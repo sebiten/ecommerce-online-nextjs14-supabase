@@ -1,14 +1,25 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { User } from "@supabase/supabase-js";
 import { singout } from "@/app/login/actions";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-interface INavBarProps {}
-
 export function NavBar({ user }: { user: User | null }) {
+  const [cartItemCount, setCartItemCount] = useState<number>(0);
+  const aud = user?.aud;
+
+  // Obtener datos del localStorage al montar el componente
+  useEffect(() => {
+    const cartItems = localStorage.getItem("cartItems");
+    if (cartItems) {
+      const parsedCartItems = JSON.parse(cartItems);
+      // Contar la cantidad de items en el carrito
+      setCartItemCount(parsedCartItems.length);
+    }
+  }, []);
+
   return (
     <nav className="bg-gradient-to-r from-sky-700 to-blue-600 text-white p-4">
       <div className="container mx-auto flex justify-between items-center">
@@ -24,7 +35,7 @@ export function NavBar({ user }: { user: User | null }) {
 
         {/* Botones de inicio de sesión */}
         <div className="hidden md:flex items-center space-x-4">
-          {user ? null : ( // Ocultar el botón de "Login" si hay un usuario autenticado
+          {user ? null : (
             <Link href="/login">
               <span className="hover:text-gray-300 transition duration-300">
                 Login
@@ -60,6 +71,17 @@ export function NavBar({ user }: { user: User | null }) {
               <span className="">{user?.email}</span>
             </>
           ) : null}
+
+          {/* Mostrar la cantidad de items en el carrito */}
+          {aud === "authenticated" && (
+            <div>
+              <Link href="/cart">
+                <span className="hover:text-gray-300 transition duration-300">
+                  Cart ({cartItemCount})
+                </span>
+              </Link>
+            </div>
+          )}
         </div>
 
         {/* Menú de hamburguesa para pantallas pequeñas */}
