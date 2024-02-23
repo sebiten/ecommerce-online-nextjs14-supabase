@@ -1,12 +1,15 @@
 "use server";
 import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { createClient } from "../utils/supabase/server";
 
+export async function getSessionData() {
+  const supabase = createClient();
+  return supabase.auth.getSession();
+}
+// -------LOGEARSE-------
 export async function login(formData: FormData) {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
 
   // type-casting here for convenience
   // in practice, you should validate your inputs
@@ -26,9 +29,10 @@ export async function login(formData: FormData) {
 }
 
 export async function signup(formData: FormData) {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
+
   // type-casting here for convenience
+  // in practice, you should validate your inputs
   const data = {
     email: formData.get("email") as string,
     password: formData.get("password") as string,
@@ -44,20 +48,18 @@ export async function signup(formData: FormData) {
   redirect("/");
 }
 
+// ----DESLOGEARSE-----
 export async function singout() {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
   const { error } = await supabase.auth.signOut();
   if (error) {
     redirect("/error");
   }
 
   revalidatePath("/", "layout");
-
 }
 
 // carrito action
-
 
 export async function searchFilter(formData: FormData) {
   const titleEntry = formData.get("title");

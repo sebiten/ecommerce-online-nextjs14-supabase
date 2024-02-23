@@ -10,6 +10,7 @@ import Image from "next/image";
 import { TiShoppingCart } from "react-icons/ti";
 import { GiShoppingCart } from "react-icons/gi";
 import { useAppContext } from "../context";
+import { NavBarDropdown } from "./NavBarDropDown";
 
 export function NavBar({ user }: { user: User | null }) {
   const { cartItems } = useAppContext();
@@ -21,16 +22,27 @@ export function NavBar({ user }: { user: User | null }) {
   );
 
   return (
-    <nav className=" border-b-2 p-6">
+    <nav className="border-b-2">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
         <Link href="/">
-          <Image height={45} width={45} alt="icon" src="/favicon.ico" />
+          <Image height={80} width={120} alt="icon" src="/pilcheria.png" />
         </Link>
 
-        {/* Menú de navegación */}
+        {/* Menú de navegación en dispositivos móviles */}
+        <div className="md:hidden flex items-center justify-center gap-4">
+          <ModeToggle />
+          <div>
+            <Link href="/carrito">
+              <span className="hover:text-gray-300 flex items-center justify-center transition duration-300">
+                <GiShoppingCart size={35} /> <p className="">{totalItems}</p>
+              </span>
+            </Link>
+          </div>
+          <NavBarDropdown user={user} />
+        </div>
 
-        {/* Botones de inicio de sesión */}
+        {/* Resto del NavBar para pantallas medianas y grandes */}
         <div className="hidden md:flex items-center space-x-4">
           <div className="hidden md:flex space-x-4">
             <ModeToggle />
@@ -68,7 +80,7 @@ export function NavBar({ user }: { user: User | null }) {
                   Profile
                 </span>
               </Link>
-              <span className="">{user?.email}</span>
+              <span className="">Hi! 👋 {user?.email}</span>
             </>
           ) : null}
 
@@ -82,26 +94,6 @@ export function NavBar({ user }: { user: User | null }) {
               </Link>
             </div>
           )}
-        </div>
-
-        {/* Menú de hamburguesa para pantallas pequeñas */}
-        <div className="md:hidden">
-          <button className="text-white">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              className="h-6 w-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16m-7 6h7"
-              />
-            </svg>
-          </button>
         </div>
       </div>
     </nav>

@@ -1,7 +1,6 @@
 import React from "react";
 import PageClient from "./page.client";
 import { createClient } from "../utils/supabase/server";
-import { cookies } from "next/headers";
 
 type ProfileParams = {
   [key: string]: string;
@@ -12,8 +11,7 @@ export default async function page({
 }: {
   searchParams: ProfileParams;
 }) {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = createClient();
 
   const { title, size } = searchParams;
 
