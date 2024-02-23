@@ -8,6 +8,9 @@ export async function GET(request: NextRequest) {
   const type = searchParams.get("type") as EmailOtpType | null;
   const next = searchParams.get("next") ?? "/";
 
+  const isProduction = process.env.NODE_ENV === 'production';
+ const baseURL = isProduction ? 'https://tu-sitio-en-produccion.com' : 'http://localhost:3000';
+
   const redirectTo = request.nextUrl.clone();
   redirectTo.pathname = next;
   redirectTo.searchParams.delete("token_hash");
