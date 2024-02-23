@@ -6,6 +6,8 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import NavBar from "./components/NavBar";
 import { ToastContainer } from "react-toastify";
+import Footer from "./components/Footer";
+import ThemeProvider from "@/components/ui/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,11 +29,19 @@ export default async function RootLayout({
   } = await supabase.auth.getUser();
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <NavBar user={user} />
-         <ToastContainer/>
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <NavBar user={user} />
+          <ToastContainer />
+          {children}
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

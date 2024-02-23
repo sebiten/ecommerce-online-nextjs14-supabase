@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 export default function Page() {
   return (
     <div className="w-full h-screen flex-col flex justify-center items-center">
-      <h1 className="text-4xl text-black tracking-tighter font-bold">
+      <h1 className="text-4xl  tracking-tighter font-bold">
         Login to your account
       </h1>
       <form className="w-3/12">
@@ -20,7 +20,7 @@ export default function Page() {
             name="email"
             id="email"
             required
-            className="text-black px-3 w-full h-12 rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600"
+            className=" px-3 w-full h-12 rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600"
           />
         </div>
         <div className="my-4">
@@ -32,18 +32,17 @@ export default function Page() {
             name="password"
             id="password"
             required
-            className="text-black px-3 w-full h-12 rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600"
+            className=" px-3 w-full h-12 rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600"
           />
         </div>
         <button
           formAction={async (formData) => {
             await login(formData);
-            toast.success("Logged in successfully.🎊")
-
+            toast.success("Logged in successfully.🎊");
           }}
           className="w-full"
         >
-          <span className="border-none h-12 rounded-md justify-center flex items-center text-white bg-sky-600 hover:bg-blue-500 transition duration-200 shadow-lg shadow-purple-600/35 w-full">
+          <span className="border-none h-12 rounded-md justify-center flex items-center text-white bg-sky-600 hover:bg-blue-500 transition duration-200 shadow-lg shadow-white/15 w-full">
             Login
           </span>
         </button>

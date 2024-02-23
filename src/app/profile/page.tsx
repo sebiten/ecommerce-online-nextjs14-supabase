@@ -43,10 +43,10 @@ export default async function About() {
               </span>
             </span>
           </span>
-          <h1 className="text-2xl font-semibold mt-4">
+          <h1 className="text-2xl dark:text-black font-semibold mt-4">
             Hello, {data.user.email}
           </h1>
-          <p className="text-gray-500 text-sm mt-2">Welcome to our website!</p>
+          <p className="text-sm mt-2 dark:text-black">Welcome to our website!</p>
         </div>
         <div className="mt-6 text-center">
           <Link className="text-blue-500 hover:underline" href="/">

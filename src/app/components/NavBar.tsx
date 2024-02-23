@@ -5,6 +5,10 @@ import { User } from "@supabase/supabase-js";
 import { singout } from "@/app/login/actions";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ModeToggle from "./ModeToggle";
+import Image from "next/image";
+import { TiShoppingCart } from "react-icons/ti";
+import { GiShoppingCart } from "react-icons/gi";
 
 export function NavBar({ user }: { user: User | null }) {
   const [cartItemCount, setCartItemCount] = useState<number>(0);
@@ -21,20 +25,20 @@ export function NavBar({ user }: { user: User | null }) {
   }, []);
 
   return (
-    <nav className="bg-gradient-to-r from-sky-700 to-blue-600 text-white p-4">
+    <nav className=" border-b-2 p-6">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
         <Link href="/">
-          <span className="text-2xl font-bold">Your Logo</span>
+          <Image height={45} width={45} alt="icon" src="/favicon.ico" />
         </Link>
 
         {/* Menú de navegación */}
-        <div className="hidden md:flex space-x-4">
-          {/* Agrega más enlaces según tus necesidades */}
-        </div>
 
         {/* Botones de inicio de sesión */}
         <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex space-x-4">
+            <ModeToggle />
+          </div>
           {user ? null : (
             <Link href="/login">
               <span className="hover:text-gray-300 transition duration-300">
@@ -45,7 +49,7 @@ export function NavBar({ user }: { user: User | null }) {
           {user ? (
             <form>
               <button
-                className="bg-red-400 text-white px-4 py-2 rounded-full hover:bg-sky-500 hover:text-white transition duration-300 flex flex-col items-center justify-center"
+                className="bg-red-400 text-white px-4 py-3 rounded-lg hover:bg-sky-500 font-bold hover:text-white transition duration-300 flex flex-col items-center justify-center"
                 formAction={async () => {
                   await singout();
                   toast.success("Successfully logged out. Have a great day!");
@@ -56,7 +60,7 @@ export function NavBar({ user }: { user: User | null }) {
             </form>
           ) : (
             <Link href="/signup">
-              <span className="bg-white text-gray-900 px-4 py-2 rounded-full hover:bg-sky-500 hover:text-white transition duration-300">
+              <span className="bg-white text-gray-900 px-4 font-bold py-4 rounded-lg hover:bg-sky-500 hover:text-white transition duration-300">
                 Sign Up
               </span>
             </Link>
@@ -64,7 +68,7 @@ export function NavBar({ user }: { user: User | null }) {
           {user ? (
             <>
               <Link href="/profile">
-                <span className="hover:text-gray-300 mr-4 transition duration-300">
+                <span className="hover:text-gray-300 mr-3 transition duration-300">
                   Profile
                 </span>
               </Link>
@@ -76,8 +80,8 @@ export function NavBar({ user }: { user: User | null }) {
           {aud === "authenticated" && (
             <div>
               <Link href="/cart">
-                <span className="hover:text-gray-300 transition duration-300">
-                  Cart ({cartItemCount})
+                <span className="hover:text-gray-300 flex items-center justify-center transition duration-300">
+                <GiShoppingCart size={35}  />  ({cartItemCount})
                 </span>
               </Link>
             </div>

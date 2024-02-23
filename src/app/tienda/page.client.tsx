@@ -36,13 +36,11 @@ export default function PageClient(
   return (
     <div>
       <form
-        className="flex flex-col mt-6 gap-4 max-w-sm mx-auto items-center justify-center"
+        className="flex flex-col mt-6 gap-4 max-w-xl mx-auto items-center justify-center"
         action={searchFilter}
       >
-        <h2 className="text-center font-bold text-2xl mb-6">
-          <span className="border-b-4 border-sky-400">
-            Explora tus prendas aquí
-          </span>
+        <h2 className="text-center font-bold text-2xl mb-2">
+          <span>Explora tus prendas aquí</span>
         </h2>
         <Input
           onChange={(e) => {
@@ -62,47 +60,44 @@ export default function PageClient(
               <Checkbox name="size" value={size} id={size} />
               <label
                 htmlFor={size}
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                className="text-xl font-bold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
                 {size}
               </label>
             </div>
           ))}
+          <Button className="font-bold py-4" variant="default" type="submit">
+            Search model
+          </Button>
         </div>
-        <Button type="submit">Search model</Button>
       </form>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 py-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 py-8 max-w-7xl mx-auto">
         {prenda &&
           prenda.map((item: ItemData) => (
-            <Link
-              href={`/tienda/${item.id}`}
-              key={item.id}
-              className="relative group rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 ease-in-out w-full mx-auto"
-            >
-              <Image
-                src={item.images}
-                width={1920}
-                height={1080}
-                layout="responsive"
-                quality={80}
-                alt={item.description}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/50 group-hover:from-transparent transition-opacity duration-300 ease-in-out"></div>
-              <div className="p-2">
-                <h3 className="text-sm font-semibold transition-opacity duration-300 ease-in-out">
-                  {item.title}
-                </h3>
-                <div className="flex flex-row justify-between mt-1">
-                  <p className="text-xs font-medium transition-opacity duration-300 ease-in-out">
-                    {item.sizes
-                      ? item.sizes.split(",").join(", ")
-                      : "No sizes available"}
+            <Link href={`/tienda/${item.id}`} key={item.id} passHref>
+              <div className="relative group rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 ease-in-out w-full mx-auto">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={item.images}
+                  alt={item.description}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/50 group-hover:from-transparent transition-opacity duration-300 ease-in-out"></div>
+                <div className="p-2">
+                  <h3 className="text-sm font-semibold transition-opacity duration-300 ease-in-out">
+                    {item.title}
+                  </h3>
+                  <div className="flex flex-row justify-between mt-1">
+                    <p className="text-xs font-medium transition-opacity duration-300 ease-in-out">
+                      {item.sizes
+                        ? item.sizes.split(",").join(", ")
+                        : "No sizes available"}
+                    </p>
+                  </div>
+                  <p className="text-lg font-bold mt-1 transition-opacity duration-300 ease-in-out">
+                    ${item.price}
                   </p>
                 </div>
-                <p className="text-lg font-bold mt-1 transition-opacity duration-300 ease-in-out">
-                  ${item.price}
-                </p>
               </div>
             </Link>
           ))}

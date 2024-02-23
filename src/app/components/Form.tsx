@@ -83,8 +83,8 @@ export default function Form({  item, aud, params }: any) {
       <p className="text-xl font-semibold mb-2">{item?.title}</p>
       <p className="text-xl font-semibold mb-2">${item?.price}</p>
 
-      <p className="text-gray-500 text-sm mb-2">(item?.created_at)</p>
-      <p className="text-gray-700 text-sm mb-4">{item?.description}</p>
+      <p className=" text-sm mb-2">(item?.created_at)</p>
+      <p className=" text-sm mb-4">{item?.description}</p>
       <div className="flex flex-col gap-2">
         <select
           onChange={handleSizeChange}
