@@ -1,7 +1,8 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useAppContext } from "../context";
 
 export interface CartItem {
   id: string;
@@ -10,28 +11,26 @@ export interface CartItem {
   quantity: number;
 }
 
-export default function Form({  item, aud, params }: any) {
-  const [cartItems, setCartItems] = useState<any[]>([]);
+export default function Form({ item, aud, params }: any) {
+  const { cartItems, setCartItems } = useAppContext();
   const [selectedSize, setSelectedSize] = useState<string>("");
   const itemId = params;
-  console.log("item", cartItems);
+  console.log(cartItems);
+
+  // Obtener datos del localStorage al montar el componente
+  useEffect(() => {
+    const storedCartItems = localStorage.getItem("cartItems");
+    if (storedCartItems) {
+      setCartItems(JSON.parse(storedCartItems));
+    }
+  }, [setCartItems]);
+
   const handleSizeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedSize = event.target.value;
     setSelectedSize(selectedSize);
   };
-  const handleCartButton = ({
-    itemId,
-    title,
-    images,
-    description,
-    price,
-  }: {
-    itemId: any;
-    title: string;
-    images: string;
-    description: string;
-    price: number;
-  }) => {
+
+  const handleCartButton = () => {
     // Extract item ID and selected size from the parameters
     const size = selectedSize;
 
@@ -48,18 +47,18 @@ export default function Form({  item, aud, params }: any) {
         id: itemId,
         size,
         quantity: 1,
-        title,
-        images,
-        description,
-        price,
+        title: item.title,
+        images: item.images,
+        description: item.description,
+        price: item.price,
       },
     ]);
-
-    console.log("Item added to cart with quantity 1.");
-
-    // Guardar el carrito actualizado en el localStorage
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
   };
+
+  // Guardar el carrito actualizado en el localStorage después de que el estado ha cambiado
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
   return (
     <form className="max-w-3xl mx-auto ml-4">
       <div className="flex items-center justify-center">
@@ -105,16 +104,8 @@ export default function Form({  item, aud, params }: any) {
           )}
         </select>
         <Button
-          type="submit"
-          onClick={() =>
-            handleCartButton({
-              itemId: itemId,
-              title: item.title,
-              price: item.price,
-              description: item.description,
-              images: item.images,
-            })
-          }
+          type="button"
+          onClick={handleCartButton}
           // siguiente hacer que el action de este button guarde la informacion al carrito en ls
           className="hover:underline"
           disabled={aud !== "authenticated" || item.inStock <= 0}

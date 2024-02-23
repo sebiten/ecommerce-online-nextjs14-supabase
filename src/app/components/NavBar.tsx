@@ -9,20 +9,16 @@ import ModeToggle from "./ModeToggle";
 import Image from "next/image";
 import { TiShoppingCart } from "react-icons/ti";
 import { GiShoppingCart } from "react-icons/gi";
+import { useAppContext } from "../context";
 
 export function NavBar({ user }: { user: User | null }) {
+  const { cartItems } = useAppContext();
   const [cartItemCount, setCartItemCount] = useState<number>(0);
   const aud = user?.aud;
-
-  // Obtener datos del localStorage al montar el componente
-  useEffect(() => {
-    const cartItems = localStorage.getItem("cartItems");
-    if (cartItems) {
-      const parsedCartItems = JSON.parse(cartItems);
-      // Contar la cantidad de items en el carrito
-      setCartItemCount(parsedCartItems.length);
-    }
-  }, []);
+  const totalItems = cartItems.reduce(
+    (total: number, item: any) => total + item.quantity,
+    0
+  );
 
   return (
     <nav className=" border-b-2 p-6">
@@ -79,9 +75,9 @@ export function NavBar({ user }: { user: User | null }) {
           {/* Mostrar la cantidad de items en el carrito */}
           {aud === "authenticated" && (
             <div>
-              <Link href="/cart">
+              <Link href="/carrito">
                 <span className="hover:text-gray-300 flex items-center justify-center transition duration-300">
-                <GiShoppingCart size={35}  />  ({cartItemCount})
+                  <GiShoppingCart size={35} /> <p className="">{totalItems}</p>
                 </span>
               </Link>
             </div>

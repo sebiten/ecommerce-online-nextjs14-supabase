@@ -8,6 +8,7 @@ import NavBar from "./components/NavBar";
 import { ToastContainer } from "react-toastify";
 import Footer from "./components/Footer";
 import ThemeProvider from "@/components/ui/theme-provider";
+import { AppWrapper } from "./context";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,10 +38,12 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <NavBar user={user} />
-          <ToastContainer />
-          {children}
-          <Footer />
+          <AppWrapper>
+            <NavBar user={user} />
+            <ToastContainer />
+            {children}
+            <Footer />
+          </AppWrapper>
         </ThemeProvider>
       </body>
     </html>
