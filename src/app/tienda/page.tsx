@@ -1,6 +1,7 @@
-import React from "react";
+import React, { Suspense } from "react";
 import PageClient from "./page.client";
 import { createClient } from "../utils/supabase/server";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type ProfileParams = {
   [key: string]: string;

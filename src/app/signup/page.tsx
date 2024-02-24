@@ -41,9 +41,9 @@ export default function page() {
         <button
           formAction={async (formData) => {
             await signup(formData);
-            toast.success(
-              "Account created successfully. Please check your email to verify your account."
-            );
+            toast.success("Please check your email to verify your account.✉", {
+              position: "top-center",
+            });
           }}
           className="border-none h-12 rounded-md justify-center flex items-center text-white bg-purple-600 hover:bg-purple-500 transition duration-200 shadow-lg shadow-purple-600/35 w-full"
         >

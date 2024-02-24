@@ -51,8 +51,8 @@ export function NavBarDropdown({ user }: { user: User | null }) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-64 shadow-lg  rounded-md p-4">
-        <DropdownMenuLabel className="text-lg font-semibold">
-          Hey! 👋 {user?.email}
+        <DropdownMenuLabel className="text-lg font-semibold text-center">
+          Hey!👋 {user?.email}
         </DropdownMenuLabel>
         <DropdownMenuSeparator className="my-2" />
         <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
@@ -64,28 +64,35 @@ export function NavBarDropdown({ user }: { user: User | null }) {
 
         {/* Add your additional menu items here based on the user and other conditions */}
         {user ? (
-          <form className="mt-2">
-            <button
-              className="bg-red-500  px-6 py-3 rounded-full hover:bg-red-600 font-bold hover:text-white transition duration-300 focus:outline-none"
+          <form className="mt-2 flex justify-evenly items-center">
+            <Button
+              className=" px-6 py-3 rounded-full  font-bold transition duration-300 focus:outline-none"
               onClick={async () => {
                 await singout();
                 toast.success("Successfully logged out. Have a great day!");
               }}
             >
               <span>Sign Out</span>
-            </button>
+            </Button>
             <Link href="/profile">
-              <span className="hover:text-blue-500 ml-4 transition duration-300">
+              <span className="hover:text-blue-500 transition duration-300">
                 Profile
               </span>
             </Link>
           </form>
         ) : (
-          <Link href="/login">
-            <span className="mt-0 block text-lg  hover:text-blue-500 transition duration-300 focus:outline-none">
-              Login
-            </span>
-          </Link>
+          <div className="flex justify-evenly items-center">
+            <Link href="/login">
+              <span className="mt-0 block text-lg  hover:text-blue-500 transition duration-300 focus:outline-none">
+                Login
+              </span>
+            </Link>
+            <Link href="/signup">
+              <span className="hover:text-gray-300 text-lg transition duration-300">
+                Register
+              </span>
+            </Link>
+          </div>
         )}
       </DropdownMenuContent>
     </DropdownMenu>

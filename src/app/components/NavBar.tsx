@@ -11,6 +11,7 @@ import { TiShoppingCart } from "react-icons/ti";
 import { GiShoppingCart } from "react-icons/gi";
 import { useAppContext } from "../context";
 import { NavBarDropdown } from "./NavBarDropDown";
+import { Button } from "@/components/ui/button";
 
 export function NavBar({ user }: { user: User | null }) {
   const { cartItems } = useAppContext();
@@ -48,23 +49,26 @@ export function NavBar({ user }: { user: User | null }) {
             <ModeToggle />
           </div>
           {user ? null : (
-            <Link href="/login">
-              <span className="hover:text-gray-300 transition duration-300">
-                Login
-              </span>
-            </Link>
+            <>
+              <Link href="/login">
+                <span className="hover:text-gray-300 transition duration-300">
+                  Login
+                </span>
+              </Link>
+
+            </>
           )}
           {user ? (
             <form>
-              <button
-                className="bg-red-400 text-white px-4 py-3 rounded-lg hover:bg-sky-500 font-bold hover:text-white transition duration-300 flex flex-col items-center justify-center"
+              <Button
+                className=" px-4 py-3 rounded-lg hover:bg-sky-500 font-bold  transition duration-300 flex flex-col items-center justify-center"
                 formAction={async () => {
                   await singout();
                   toast.success("Successfully logged out. Have a great day!");
                 }}
               >
                 <span>Sign Out</span>
-              </button>
+              </Button>
             </form>
           ) : (
             <Link href="/signup">
