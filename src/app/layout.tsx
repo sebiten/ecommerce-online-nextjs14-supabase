@@ -4,11 +4,10 @@ import "./globals.css";
 import { createClient } from "./utils/supabase/server";
 import { redirect } from "next/navigation";
 import NavBar from "./components/NavBar";
-import { ToastContainer } from "react-toastify";
 import Footer from "./components/Footer";
 import ThemeProvider from "@/components/ui/theme-provider";
 import { AppWrapper } from "./context";
-
+import { Toaster } from "@/components/ui/toaster";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -38,8 +37,8 @@ export default async function RootLayout({
         >
           <AppWrapper>
             <NavBar user={user} />
-            <ToastContainer />
-            {children}
+            <main>{children}</main>
+            <Toaster />
             <Footer />
           </AppWrapper>
         </ThemeProvider>

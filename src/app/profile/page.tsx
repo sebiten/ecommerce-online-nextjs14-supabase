@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "../utils/supabase/server";
+import Avatar from "../components/Avatar";
 
 export default async function About() {
   const supabase = createClient();
@@ -20,16 +21,7 @@ export default async function About() {
             {/* AUI Avatar */}
             <span className="aui-avatar aui-avatar-xxlarge ">
               {/* Avatar Inner */}
-              <span className="aui-avatar-inner">
-                <Image
-                  width={500}
-                  height={500}
-                  src="/avatar-person.svg"
-                  alt="Person McRealface"
-                  className="block w-full h-full"
-                />
-              </span>
-
+              <Avatar data={data} />
               {/* Custom Presence Indicator */}
               <span className="custom-presence-indicator overflow-hidden">
                 <svg

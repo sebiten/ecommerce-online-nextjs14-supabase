@@ -1,7 +1,8 @@
 "use client";
 import React from "react";
 import { signup } from "../login/actions";
-import { toast } from "react-toastify";
+import { toast } from "@/components/ui/use-toast";
+import { Button } from "@/components/ui/button";
 
 interface IpageProps {}
 
@@ -38,17 +39,23 @@ export default function page() {
             className=" px-3 w-full h-12 rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600"
           />
         </div>
-        <button
+        <Button
           formAction={async (formData) => {
             await signup(formData);
-            toast.success("Please check your email to verify your account.✉", {
-              position: "top-center",
+            toast({
+              description: (
+                <pre className="leading-loose flex flex-col mt-1 w-[340px] text-sm font-sans  rounded-md font-bold">
+                  <code className="leading-loose">Registro Completado! 😁</code>
+                  <code className="leading-loose text-green-400">
+                    Revisa tu correo para continuar.✉
+                  </code>
+                </pre>
+              ),
             });
           }}
-          className="border-none h-12 rounded-md justify-center flex items-center text-white bg-purple-600 hover:bg-purple-500 transition duration-200 shadow-lg shadow-purple-600/35 w-full"
         >
           Sign up
-        </button>
+        </Button>
       </form>
     </div>
   );

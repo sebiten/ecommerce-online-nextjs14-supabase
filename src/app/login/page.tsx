@@ -2,6 +2,7 @@ import { Loader2 } from "lucide-react";
 import { getSessionData, login, signup } from "./actions";
 import React, { Suspense } from "react";
 import { redirect } from "next/navigation";
+import SignInForm from "../components/SignInForm";
 
 export default async function Page() {
   const { data } = await getSessionData();
@@ -9,11 +10,11 @@ export default async function Page() {
     return redirect("/");
   }
   return (
-    <div className="w-full h-screen flex-col flex justify-center items-center">
+    <div className="w-1/2 mx-auto h-screen flex-col flex justify-center items-center">
       <h1 className="text-4xl  tracking-tighter font-bold">
         Login to your account
       </h1>
-      <form className="w-3/12">
+      {/* <form className="w-3/12">
         <div className="my-4">
           <label htmlFor="email" className="py-1">
             Email Address
@@ -43,7 +44,8 @@ export default async function Page() {
             Login
           </span>
         </button>
-      </form>
+      </form> */}
+      <SignInForm login={login} />
     </div>
   );
 }

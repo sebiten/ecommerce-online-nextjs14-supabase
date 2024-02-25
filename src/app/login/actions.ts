@@ -2,30 +2,46 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "../utils/supabase/server";
+import { File } from "buffer";
+import { User } from "@supabase/supabase-js";
 
+type FileBody = Blob | ArrayBufferView | ArrayBuffer | FormData;
 export async function getSessionData() {
   const supabase = createClient();
   return supabase.auth.getSession();
 }
-// -------LOGEARSE-------
-export async function login(formData: FormData) {
+
+// OBTENER DATOS DEL INPUT
+export async function uploadImage(formData: FormData) {
+  "use server";
   const supabase = createClient();
+  const { data: session } = await supabase.auth.getSession();
+  const userId = session.session?.user.id;
+  const file = formData.get("file") as FileBody;
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
-  const data = {
-    email: formData.get("email") as string,
-    password: formData.get("password") as string,
-  };
-
-  const { error } = await supabase.auth.signInWithPassword(data);
+  const { data, error } = await supabase.storage
+    .from("profile")
+    .upload(`user/${userId}/`, file, {
+      upsert: true,
+    });
 
   if (error) {
-    redirect("/error");
+    console.error(error);
+  } else {
+    revalidatePath("/profile", "page");
+    console.log(data);
   }
+}
 
-  revalidatePath("/", "layout");
-  redirect("/");
+// -------LOGEARSE-------
+export async function login(data: { email: string; password: any }) {
+  const supabase = createClient();
+  const result = await supabase.auth.signInWithPassword({
+    email: data.email,
+    password: data.password,
+  });
+
+  return JSON.stringify(result);
 }
 
 export async function signup(formData: FormData) {

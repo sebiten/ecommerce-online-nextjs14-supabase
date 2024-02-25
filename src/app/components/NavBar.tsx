@@ -3,20 +3,19 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { User } from "@supabase/supabase-js";
 import { singout } from "@/app/login/actions";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import ModeToggle from "./ModeToggle";
 import Image from "next/image";
-import { TiShoppingCart } from "react-icons/ti";
 import { GiShoppingCart } from "react-icons/gi";
 import { useAppContext } from "../context";
 import { NavBarDropdown } from "./NavBarDropDown";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
 
 export function NavBar({ user }: { user: User | null }) {
   const { cartItems } = useAppContext();
   const [cartItemCount, setCartItemCount] = useState<number>(0);
   const aud = user?.aud;
+  const userId = user?.id
   const totalItems = cartItems.reduce(
     (total: number, item: any) => total + item.quantity,
     0
@@ -55,16 +54,24 @@ export function NavBar({ user }: { user: User | null }) {
                   Login
                 </span>
               </Link>
-
             </>
           )}
           {user ? (
             <form>
               <Button
-                className=" px-4 py-3 rounded-lg hover:bg-sky-500 font-bold  transition duration-300 flex flex-col items-center justify-center"
+                className=" px-4 py-3 rounded-lg hover:bg-red-500 font-bold  transition duration-300 flex flex-col items-center justify-center"
                 formAction={async () => {
                   await singout();
-                  toast.success("Successfully logged out. Have a great day!");
+                  toast({
+                    description: (
+                      <pre className="mt-1 leading-tight flex flex-col w-[340px] font-sans text-sm rounded-md font-bold">
+                        <code className="leading-loose">Vuelve Pronto!👋</code>
+                        <code className="text-green-400 leading-tight">
+                          Has salido correctamente ✔️
+                        </code>
+                      </pre>
+                    ),
+                  });
                 }}
               >
                 <span>Sign Out</span>
@@ -78,14 +85,20 @@ export function NavBar({ user }: { user: User | null }) {
             </Link>
           )}
           {user ? (
-            <>
+            <div>
               <Link href="/profile">
+                <Image
+                  src={`https://aaxuhmukpnvrngnsqoym.supabase.co/storage/v1/object/public/profile/user/${userId}?${Date.now()}`}
+                  alt="profilephoto"
+                  width={30}
+                  height={30}
+                />
                 <span className="hover:text-gray-300 mr-3 transition duration-300">
                   Profile
                 </span>
               </Link>
               <span className="">Hi! 👋 {user?.email}</span>
-            </>
+            </div>
           ) : null}
 
           {/* Mostrar la cantidad de items en el carrito */}

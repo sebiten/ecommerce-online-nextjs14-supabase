@@ -12,11 +12,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { singout } from "../login/actions";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { User } from "@supabase/supabase-js";
-import { GiShoppingCart } from "react-icons/gi";
 import { useAppContext } from "../context";
+import { toast } from "@/components/ui/use-toast";
+
 export function NavBarDropdown({ user }: { user: User | null }) {
   const [position, setPosition] = React.useState("bottom");
   const { cartItems } = useAppContext();
@@ -69,7 +68,16 @@ export function NavBarDropdown({ user }: { user: User | null }) {
               className=" px-6 py-3 rounded-full  font-bold transition duration-300 focus:outline-none"
               onClick={async () => {
                 await singout();
-                toast.success("Successfully logged out. Have a great day!");
+                toast({
+                  description: (
+                    <pre className="mt-1 leading-tight flex flex-col w-[340px] font-sans text-sm rounded-md font-bold">
+                       <code className="leading-loose">Vuelve Pronto!👋</code>
+                      <code className="text-green-400 leading-tight">
+                        Has salido correctamente ✔️
+                      </code>
+                    </pre>
+                  ),
+                });
               }}
             >
               <span>Sign Out</span>
