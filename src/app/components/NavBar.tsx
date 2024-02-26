@@ -15,7 +15,7 @@ export function NavBar({ user }: { user: User | null }) {
   const { cartItems } = useAppContext();
   const [cartItemCount, setCartItemCount] = useState<number>(0);
   const aud = user?.aud;
-  const userId = user?.id
+  const userId = user?.id;
   const totalItems = cartItems.reduce(
     (total: number, item: any) => total + item.quantity,
     0
