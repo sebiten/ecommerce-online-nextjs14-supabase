@@ -10,7 +10,8 @@ import { useAppContext } from "../context";
 import { NavBarDropdown } from "./NavBarDropDown";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
-
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Skeleton } from "@/components/ui/skeleton";
 export function NavBar({ user }: { user: User | null }) {
   const { cartItems } = useAppContext();
   const [cartItemCount, setCartItemCount] = useState<number>(0);
@@ -46,6 +47,17 @@ export function NavBar({ user }: { user: User | null }) {
         <div className="hidden md:flex items-center space-x-4">
           <div className="hidden md:flex space-x-4">
             <ModeToggle />
+            {/* Mostrar la cantidad de items en el carrito */}
+            {aud === "authenticated" && (
+              <div>
+                <Link href="/carrito">
+                  <span className="hover:text-gray-300 flex items-center justify-center transition duration-300">
+                    <GiShoppingCart size={35} />{" "}
+                    <p className="">{totalItems}</p>
+                  </span>
+                </Link>
+              </div>
+            )}
           </div>
           {user ? null : (
             <>
@@ -86,31 +98,31 @@ export function NavBar({ user }: { user: User | null }) {
           )}
           {user ? (
             <div>
-              <Link href="/profile">
-                <Image
-                  src={`https://aaxuhmukpnvrngnsqoym.supabase.co/storage/v1/object/public/profile/user/${userId}?${Date.now()}`}
-                  alt="profilephoto"
-                  width={30}
-                  height={30}
-                />
-                <span className="hover:text-gray-300 mr-3 transition duration-300">
-                  Profile
-                </span>
+              <Link className="flex" href="/profile ">
+                <div className="flex items-center justify-center">
+                  <Button className="flex items-end justify-end">
+                    <span className="">Hi! 👋 </span>
+                    <p>{user?.email}</p>
+                  </Button>
+                </div>
+                <div className="ml-4">
+                  <Avatar className="ml-1 ">
+                    <AvatarImage
+                      className="object-cover "
+                      src={`https://aaxuhmukpnvrngnsqoym.supabase.co/storage/v1/object/public/profile/user/${userId}?${Date.now()}`}
+                      alt="@shadcn"
+                    />
+                    <AvatarFallback>
+                      <Skeleton className="mx-auto rounded-full" />
+                    </AvatarFallback>
+                  </Avatar>
+                  <span className="hover:text-gray-300 mr-3 text-ce transition duration-300">
+                    Profile
+                  </span>
+                </div>
               </Link>
-              <span className="">Hi! 👋 {user?.email}</span>
             </div>
           ) : null}
-
-          {/* Mostrar la cantidad de items en el carrito */}
-          {aud === "authenticated" && (
-            <div>
-              <Link href="/carrito">
-                <span className="hover:text-gray-300 flex items-center justify-center transition duration-300">
-                  <GiShoppingCart size={35} /> <p className="">{totalItems}</p>
-                </span>
-              </Link>
-            </div>
-          )}
         </div>
       </div>
     </nav>
