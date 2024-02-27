@@ -9,10 +9,9 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { MercadoPagoConfig, Preference } from "mercadopago";
 
-const client = new MercadoPagoConfig({
-  accessToken: process.env.MP_ACCES_TOKEN!,
-});
-
+// const client = new MercadoPagoConfig({
+//   accessToken: process.env.MP_ACCES_TOKEN!,
+// });
 
 export default function Page() {
   const { cartItems, setCartItems } = useAppContext();
@@ -22,22 +21,21 @@ export default function Page() {
   );
   const totalItems: number = cartItems.length;
 
-
-    const handleMercadoPago = async () => {
-      const preference = await new Preference(client).create({
-        body: {
-          items: [
-            {
-              id: "pago-prenda",
-              title: "Mi producto",
-              quantity: 1,
-              unit_price: 2000,
-            },
-          ],
-        },
-      });
-      router.redirect(preference.sandbox_init_point!);
-    }
+  // const handleMercadoPago = async () => {
+  //   const preference = await new Preference(client).create({
+  //     body: {
+  //       items: [
+  //         {
+  //           id: "pago-prenda",
+  //           title: "Mi producto",
+  //           quantity: 1,
+  //           unit_price: 2000,
+  //         },
+  //       ],
+  //     },
+  //   });
+  //   router.redirect(preference.sandbox_init_point!);
+  // };
 
   const handleDeleteItem = (index: number): void => {
     const updatedCartItems: CartItem[] = [...cartItems];
