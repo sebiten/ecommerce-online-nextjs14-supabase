@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import ThemeProvider from "@/components/ui/theme-provider";
 import { AppWrapper } from "./context";
 import { Toaster } from "@/components/ui/toaster";
+import { siteFont } from "./config/fonts";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -28,7 +29,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={siteFont.className}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -37,7 +38,7 @@ export default async function RootLayout({
         >
           <AppWrapper>
             <NavBar user={user} />
-            <main>{children}</main>
+            <main className="min-h-screen">{children}</main>
             <Toaster />
             <Footer />
           </AppWrapper>

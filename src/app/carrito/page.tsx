@@ -7,6 +7,12 @@ import Spinner from "../components/Spinner";
 import { CartItem, ItemData } from "../../../types";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { MercadoPagoConfig, Preference } from "mercadopago";
+
+const client = new MercadoPagoConfig({
+  accessToken: process.env.MP_ACCES_TOKEN!,
+});
+
 
 export default function Page() {
   const { cartItems, setCartItems } = useAppContext();
@@ -15,6 +21,23 @@ export default function Page() {
     0
   );
   const totalItems: number = cartItems.length;
+
+
+    const handleMercadoPago = async () => {
+      const preference = await new Preference(client).create({
+        body: {
+          items: [
+            {
+              id: "pago-prenda",
+              title: "Mi producto",
+              quantity: 1,
+              unit_price: 2000,
+            },
+          ],
+        },
+      });
+      router.redirect(preference.sandbox_init_point!);
+    }
 
   const handleDeleteItem = (index: number): void => {
     const updatedCartItems: CartItem[] = [...cartItems];
@@ -60,7 +83,7 @@ export default function Page() {
               </div>
             ))}
           </div>
-          <div className="lg:fixed top-30 w-full lg:w-1/5 right-0 mt-4 mx-auto p-8 border rounded">
+          <form className="lg:fixed top-30 w-full lg:w-1/5 right-0 mt-4 mx-auto p-8 border rounded">
             <h2 className="text-2xl font-bold mb-4">Checkout</h2>
             <p className="text-lg">Items: {totalItems}</p>
             <div className="flex justify-between items-center mb-4">
@@ -70,7 +93,7 @@ export default function Page() {
             <Button className="p-3 rounded hover:bg-gray-300 transition-all duration-300">
               Pagar
             </Button>
-          </div>
+          </form>
         </>
       ) : (
         <div className="h-screen w-full flex items-center justify-center">

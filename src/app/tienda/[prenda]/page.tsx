@@ -22,7 +22,7 @@ export default async function Page({ params }: any) {
       <div className="grid gap-8 items-center justify-center ">
         {data?.map((item: any) => (
           <div key={item.id} className="flex gap-14 p-4 rounded-lg">
-            <Suspense fallback={<Skeleton/>}>
+            <Suspense fallback={<Skeleton className="w-[100px] h-[24px]"/>}>
               <Form item={item} aud={aud} params={params} />
             </Suspense>
           </div>

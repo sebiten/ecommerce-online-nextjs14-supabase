@@ -7,8 +7,8 @@ const year = new Date().getFullYear();
 
 export default function Footer() {
   return (
-    <footer className=" pt-8 pb-6">
-      <div className="container mx-auto px-4">
+    <footer className="pt-8 pb-6">
+      <div className=" mx-auto px-4">
         <div className="flex flex-wrap justify-center"></div>
         <hr className="my-6 border-gray-700" />
         <div className="flex flex-wrap items-center justify-center">

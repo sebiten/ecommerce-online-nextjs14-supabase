@@ -4,8 +4,32 @@ import { redirect } from "next/navigation";
 import { createClient } from "../utils/supabase/server";
 import { File } from "buffer";
 import { User } from "@supabase/supabase-js";
+import { MercadoPagoConfig, Preference } from "mercadopago";
+
+const client = new MercadoPagoConfig({
+  accessToken: process.env.MP_ACCES_TOKEN!,
+});
 
 type FileBody = Blob | ArrayBufferView | ArrayBuffer | FormData;
+
+// MERCADO PAGO ACTION
+export async function payment(formData: FormData) {
+  const preference = await new Preference(client).create({
+    body: {
+      items: [
+        {
+          id: "pago-prenda",
+          title: "Mi producto",
+          quantity: 1,
+          unit_price: 2000,
+        },
+      ],
+    },
+  });
+  redirect(preference.sandbox_init_point!);
+}
+
+//GET SESSION DATA
 export async function getSessionData() {
   const supabase = createClient();
   return supabase.auth.getSession();
@@ -46,9 +70,6 @@ export async function login(data: { email: string; password: any }) {
 
 export async function signup(formData: FormData) {
   const supabase = createClient();
-
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
   const data = {
     email: formData.get("email") as string,
     password: formData.get("password") as string,

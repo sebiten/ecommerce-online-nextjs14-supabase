@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
+import { titleFont } from "../config/fonts";
 export function NavBar({ user }: { user: User | null }) {
   const { cartItems } = useAppContext();
   const [cartItemCount, setCartItemCount] = useState<number>(0);
@@ -23,11 +24,15 @@ export function NavBar({ user }: { user: User | null }) {
   );
 
   return (
-    <nav className="border-b-2">
+    <nav className="border-b-2 py-4">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
         <Link href="/">
-          <Image height={80} width={120} alt="icon" src="/pilcheria.png" />
+          <p className="text-xl text-center font-bold uppercase text-blue-500">
+            <span className={titleFont.className}>
+              Pilcheria <br /> OnLine
+            </span>
+          </p>
         </Link>
 
         {/* Menú de navegación en dispositivos móviles */}
